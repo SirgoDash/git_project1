@@ -13,11 +13,11 @@ class MyWidget(QMainWindow):
         self.pushButton.clicked.connect(self.update_result)
         self.tableWidget.itemChanged.connect(self.item_changed)
         self.pushButton_2.clicked.connect(self.save_results)
+        self.pushButton_3.clicked.connect(self.app_data)
         self.pushButton_4.clicked.connect(self.show_base)
         self.main_base = DBSample()
         self.modified = {}
         self.titles = None
-
 
     def update_result(self):
         cur = self.con.cursor()
@@ -46,10 +46,19 @@ class MyWidget(QMainWindow):
             que += ", ".join([f"{key}='{self.modified.get(key)}'"
                               for key in self.modified.keys()])
             que += "WHERE id = ?"
-            print(que)
             cur.execute(que, (self.spinBox.text(),))
             self.con.commit()
             self.modified.clear()
+
+    def app_data(self):
+        cur = self.con.cursor()
+        qu = (f'INSERT INTO coffee (sort, roast, ground, taste, price, weight) VALUES'
+              f'("{self.lineEdit.text()}", "{self.lineEdit_2.text()}",'
+              f' "{self.lineEdit_3.text()}", "{self.lineEdit_4.text()}",'
+              f' "{self.lineEdit_5.text()}", "{self.lineEdit_6.text()}")')
+        cur.execute(qu)
+        self.con.commit()
+        self.modified.clear()
 
     def show_base(self):
         self.main_base.show()
