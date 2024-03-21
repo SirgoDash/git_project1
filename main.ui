@@ -20,8 +20,21 @@
       <x>20</x>
       <y>20</y>
       <width>761</width>
-      <height>561</height>
+      <height>521</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="editButton">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>560</y>
+      <width>121</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Редактировать</string>
     </property>
    </widget>
   </widget>
