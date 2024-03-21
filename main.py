@@ -64,6 +64,9 @@ class MyWidget(QMainWindow):
         self.main_base.show()
         self.close()
 
+    def closeEvent(self, event):
+        self.con.close()
+
 
 class DBSample(QMainWindow):
     def __init__(self):
@@ -71,6 +74,7 @@ class DBSample(QMainWindow):
         uic.loadUi('main.ui', self)
         self.connection = sqlite3.connect("coffee.sqlite")
         self.select_data()
+        self.editButton.clicked.connect(self.show_edit)
 
     def select_data(self):
         res = self.connection.cursor().execute("""SELECT * FROM coffee""").fetchall()
@@ -82,6 +86,11 @@ class DBSample(QMainWindow):
             self.tableWidget.setRowCount(self.tableWidget.rowCount() + 1)
             for j, elem in enumerate(row):
                 self.tableWidget.setItem(i, j, QTableWidgetItem(str(elem)))
+
+    def show_edit(self):
+        self.edit_base = MyWidget()
+        self.edit_base.show()
+        self.hide()
 
     def closeEvent(self, event):
         self.connection.close()
